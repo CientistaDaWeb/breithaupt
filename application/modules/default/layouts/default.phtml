@@ -1,0 +1,271 @@
+<?php
+$configs = Zend_Registry::get('application');
+echo $this->doctype();
+?>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br" xml:lang="pt-br">
+    <head>
+        <?php
+        if (isset($this->view->title)):
+            $this->headTitle($this->view->title);
+        endif;
+        $this->headTitle($configs->cliente->nome);
+        $this->headTitle()->setSeparator(' - ');
+        echo $this->headTitle();
+
+        /* Adiciona as Meta Tags */
+        $this->headMeta()
+                ->appendHttpEquiv('Content-Type', 'text/html;charset=UTF-8')
+                ->appendHttpEquiv('Content-Language', 'pt-BR')
+                ->appendName('author', 'Fernando Henrique - Webscientist')
+                ->appendName('robots', 'index,follow')
+                ->appendName('googlebot', 'index,follow')
+                ->appendName('google', 'notranslate')
+                ->appendName('Content-Language', 'pt-br')
+                ->appendName('reply-to', $configs->cliente->email)
+                ->appendName('google-site-verification', $configs->google->verification);
+        echo $this->headMeta();
+        /* Adiciona as Meta Tags */
+        $this->headLink()
+                ->appendStylesheet('/css/reset.css')
+                ->appendStylesheet('/css/grid.css')
+                ->appendStylesheet('/css/style.css')
+                ->appendStylesheet('/css/light/jquery-ui-1.8.23.custom.css')
+                ->appendStylesheet('/css/jquery.jgrowl.css')
+                ->appendStylesheet('/css/site.css')
+                ->headLink(array('rel' => 'favicon', 'href' => '/favicon.ico'), 'PREPEND')
+                ->headLink(array('rel' => 'shortcut icon', 'href' => '/favicon.ico', 'type' => 'image/x-icon'), 'PREPEND');
+        echo $this->headLink();
+
+        $this->headScript()
+                ->appendFile('/js/jquery-1.8.0.min.js')
+                ->appendFile('/js/jquery-ui-1.8.23.custom.min.js')
+                ->appendFile('/js/jquery.jgrowl.js')
+                ->appendFile('/js/jquery.galleriffic.js')
+                ->appendFile('/js/jquery.opacityrollover.js')
+                ->appendFile('/js/jquery.form.js')
+                ->appendFile('/js/site.js')
+                ->appendFile('/js/menu.js')
+                ->appendFile('/js/superfish.js')
+                ->appendFile('/js/jqFancyTransitions.1.8.min.js')
+        ;
+        echo $this->headScript();
+        if (!empty($configs->analytics->ua)) :
+            ?>
+            <script type="text/javascript">
+                (function (i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r;
+                    i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+                    a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0];
+                    a.async = 1;
+                    a.src = g;
+                    m.parentNode.insertBefore(a, m)
+                })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                ga('create', '<?php echo $configs->analytics->ua; ?>', '<?php echo $configs->cliente->dominio; ?>');
+                ga('send', 'pageview');
+            </script>
+        <?php endif; ?>
+    </head>
+    <body>
+        <script>
+            $(function () {
+                $("#modalMaisPontos").dialog({
+                    modal: true,
+                    autoOpen: false,
+                    width: 820,
+                    height: 550,
+                    resizable: false,
+                    dialogClass: "modal",
+                });
+                $('#saibaMaisPontos').click(function () {
+                    $("#modalMaisPontos").dialog('open');
+                });
+            });
+        </script>
+        <div id="header">
+            <div class="container_12">
+                <div class="grid_5">
+                    <div id="logo">
+                        <a href="/" title="Home" class="image_replace">
+                            <?php echo $configs->cliente->nome; ?>
+                        </a>
+                    </div>
+                </div>
+                <div class="prefix_2 grid_5">
+                    &nbsp;
+                </div>
+                <div class="clear-fix"></div>
+                <div class="grid_12">
+                    <div id="menunav">
+                        <?php echo $this->SiteMenu()->menu()->setUlClass('sf-menu'); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+        if ($this->slideshow):
+            $BannersModel = new Banners_Model();
+            $banners = $BannersModel->listByHome();
+            if (!empty($banners)):
+                ?>
+                <div class="clear-fix"></div>
+                <div id="slideshow">
+                    <div class="container_12">
+                        <div class="grid_12">
+                            <div id="slideshow_content">
+                                <?php foreach ($banners AS $banner): ?>
+                                    <img src="/storage/imagem/<?php echo $banner['imagem']; ?>/banners?w=940&h=238&c=crop" />
+                                    <?php if (!empty($banner['url'])): ?>
+                                        <a href="<?php echo $banner['url']; ?>"></a>
+                                        <?php
+                                    endif;
+                                endforeach;
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            endif;
+        endif;
+        ?>
+        <div class="clear-fix"></div>
+        <div id="content" class="margem_t">
+            <div class="container_12">
+                <div class="grid_12">
+                    <div id="breadcrumb">
+                        Você está em: <span><?php echo $this->SiteMenu()->breadcrumbs()->setLinkLast(false)->setMinDepth(0); ?></span>
+                    </div>
+                    <hr class="margem_b_grande" />
+                </div>
+                <?php echo $this->layout()->content; ?>
+            </div>
+        </div>
+        <div class="clear-fix"></div>
+        <div id="newsletter-box">
+            <div class="container_12">
+                <div class="grid_12">
+                    <div id="formulario_newsletter">
+                        <form id="Form_Newsletter" method="POST">
+                            <table class="table-formulario">
+                                <tr>
+                                    <td>
+                                        <h2>Cadastre-se e receba ofertas exclusivas:</h2>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="nome" id="news_nome" placeholder="Insira seu nome" />
+                                    </td>
+                                    <td>
+                                        <input type="email" name="email" id="news_email" placeholder="Insira seu e-mail" />
+                                    </td>
+                                    <th>
+                                        <button type="submit" id="receber" class="bt_receber" name="enviar">Receber</button>
+                                    </th>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+                <div id="retornoNews"></div>
+            </div>
+        </div>
+        <div class="clear-fix"></div>
+        <div id="footer">
+            <div class="container_12">
+                <div class="grid_3">
+                    <ul>
+                        <li><a href="/empresa/apresentação" title="O Breithaupt">O Breithaupt</a>
+                            <ul>
+                                <li><a href="/empresa/apresentacao" title="Apresentação">Apresentação</a></li>
+                                <!--
+                                <li><a href="/empresa/historico" title="Histórico">Histórico</a></li>
+                                <li><a href="/empresa/missao-visao-e-valores" title="Missão, Visão e Valores">Missão, Visão e Valores</a></li>
+                                <li><a href="/breithaupt-social" title="Breithaupt Social">Breithaupt Social</a></li>
+                                -->
+                                <li><a href="/grupo-breithaupt" title="Grupo Breithaupt">Grupo Breithaupt</a></li>
+                                <li><a href="/noticias" title="Notícias">Notícias</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="grid_3">
+                    <ul>
+                        <li><a href="/nossas-lojas" title="Lojas e Home Centers">Lojas e Home Centers</a>
+                            <ul>
+                                <li><a href="/nossas-lojas" title="Nossas Lojas">Nossas Lojas</a></li>
+                                <li><a href="/servicos" title="Serviços">Serviços</a></li>
+                                <!--
+                                <li><a href="/faca-voce-mesmo" title="Faça Você Mesmo">Faça Você Mesmo</a></li>
+                                <li><a href="/dicas-breithaupt" title="Dicas Breithaupt">Dicas Breithaupt</a></li>
+                                -->
+                                <li><a href="/formas-de-pagamento" title="Formas de Pagamento">Formas de Pagamento</a></li>
+                                <!--
+                                <li><a href="/clube-do-profissional" title="Clube do Profissional">Clube do Profissional</a></li>
+                                -->
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="grid_3">
+                    <ul>
+                        <!--
+                        <li><a href="http://breithaupt.com.br/loja/" title="Produtos">Produtos</a></li>
+                        <li><a href="/downloads" title="Downloads">Downloads</a></li>
+                        <li><a href="/programa-sempre-mais" title="Programa Sempre Mais">Programa Sempre Mais</a></li>
+                        -->
+                        <li><a href="/trabalhe-conosco" title="Trabalhe Conosco">Trabalhe Conosco</a></li>
+                        <li><a href="/caderno-ofertas" title="Caderno de Ofertas">Caderno de Ofertas</a></li>
+                        <li><a href="/fale-conosco" title="Fale Conosco">Fale Conosco</a></li>
+                        <!--<li><a href="/horarios-fim-de-ano" title="Horários de Fim de Ano">Horários de Fim de Ano</a></li>-->
+                    </ul>
+                </div>
+                <div class="grid_3">
+                    <div id="redes_sociais" class="margem_b">
+                        <ul>
+                            <li class="facebook"><a href="https://www.facebook.com/redebreithaupt" target="_blank" title="Facebook Breithaupt" class="image_replace">Facebook Breithaupt</a></li>
+                            <li class="twitter"><a href="https://twitter.com/redebreithaupt" target="_blank" title="Twitter Breithaupt" class="image_replace">Twitter Breithaupt</a></li>
+                            <li class="youtube"><a href="http://www.youtube.com/user/redebreithaupt" target="_blank" title="Youtube Breithaupt" class="image_replace">Youtube Breithaupt</a></li>
+                        </ul>
+                    </div>
+                    <p id="central_vendas" class="margem_b">
+                        Central de Vendas: <span>
+                            Jaraguá do Sul (47) 3274-7800<br />
+                            Joinville (47) 3481-9991 e 3481-9999<br />
+                            São Bento do Sul (47) 3626-9999<br />
+                            Brusque (47) 3255-9999 e (47) 3255-9999
+                        </span>
+                    </p>
+                    <p id="sac" class="margem_b">SAC: <span>0800 475 8000</span></p>
+                    <div id="matriz">
+                        <address>Matriz: Av Getúlio Vargas, 268 | Centro</br>
+                            Jaraguá do Sul | SC - CEP: 89251-000</adress>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        $(function () {
+<?php
+$tpl = '$.jGrowl("%s", { theme: "%s", life: 10000 });';
+echo $this->flashMessenger('', $tpl);
+?>
+        });
+        var $buoop = {}
+        $buoop.ol = window.onload;
+        window.onload = function () {
+            try {
+                if ($buoop.ol)
+                    $buoop.ol();
+            } catch (e) {
+            }
+            var e = document.createElement("script");
+            e.setAttribute("type", "text/javascript");
+            e.setAttribute("src", "http://browser-update.org/update.js");
+            document.body.appendChild(e);
+        }
+    </script>
+</html>

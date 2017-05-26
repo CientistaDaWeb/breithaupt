@@ -1,0 +1,12 @@
+<div id="auth-form" class="ui-corner-all margem-b">
+    <?php echo $this->form; ?>
+</div>
+<div class="alignCenter">
+    <a href="/<?php echo $this->module; ?>/bater-ponto" class="botao alignCenter">Bater o Ponto</a>
+</div>
+<script>
+  $(function(){
+      $('.btCancelar').hide();
+      $('.btEnviar .ui-button-text').text('Logar');
+  })
+</script>

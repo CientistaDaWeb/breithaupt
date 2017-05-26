@@ -1,0 +1,8 @@
+<?php echo $this->partial('cabecalho.phtml', array('codigo' => 'Grupo-Breithaupt', 'menu' => 'O Breithaupt')); ?>
+<div class="grid_9">
+    <h1>Grupo Breithaupt</h1>
+    <?php
+    $texto = $this->TextosModel->getByCodigo('Grupo-Breithaupt');
+    echo $texto['texto'];
+    ?>
+</div>

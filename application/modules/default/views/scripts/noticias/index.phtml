@@ -1,0 +1,19 @@
+<?php echo $this->partial('cabecalho.phtml', array('codigo' => 'Noticias', 'menu' => 'O Breithaupt')); ?>
+<div class="grid_9">
+    <h1>Notícias e Novidades</h1>
+    <?php
+    if (!empty($this->noticias)):
+        ?>
+        <ul>
+            <?php foreach ($this->noticias AS $noticia): ?>
+                <li class="borda margem-b">
+                    <h2><?php echo $noticia['titulo']; ?></h2>
+                    <a href="/noticia/<?php echo $noticia['slug']; ?>" title="<?php echo $noticia['titulo']; ?>">Leia mais[+]</a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <?php echo $this->paginationControl($this->noticias, 'Sliding', 'paginator.phtml', array('parametros' => $this->parametros)); ?>
+    <?php else: ?>
+        <div class="error">Nenhuma notícia cadastrada!</div>
+    <?php endif; ?>
+</div>

@@ -1,0 +1,7 @@
+<div class="float-left descricao">
+    <div id="ano"><span class="inicio"><?php echo substr($this->historico['ano'], 0, 2); ?></span><span class="fim"><?php echo substr($this->historico['ano'], -2); ?></span></div>
+    <?php echo nl2br($this->historico['texto']); ?>
+</div>
+<div class="float-left imagem">
+    <img src="/storage/imagem/<?php echo $this->historico['imagem']; ?>/historicos?w=400&h=300" />
+</div>

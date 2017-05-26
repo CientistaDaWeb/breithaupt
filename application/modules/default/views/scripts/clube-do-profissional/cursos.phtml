@@ -1,0 +1,37 @@
+<?php echo $this->partial('cabecalho.phtml', array('codigo' => 'Cursos', 'menu' => 'O Breithaupt')); ?>
+<div class="grid_9">
+    <?php if (!empty($this->cidades)): ?>
+        <h1>Encontre seu Curso</h1>
+        <table class="table-formulario">
+            <tbody>
+                <tr>
+                    <td>Escolha a cidade:</td>
+                    <td><select id="cidade" name="cidade">
+                            <option value="">Selecione a Cidade</option>
+                            <?php foreach ($this->cidades AS $cidade): ?>
+                                <option value="<?php echo $cidade['id']; ?>"><?php echo $cidade['nome']; ?></option>
+                            <?php endforeach; ?>
+                        </select></td>
+                    <td><button class="botao-cinza" id="bt-enviar">Buscar</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="clearfix"></div>
+        <div id="lista-cursos">
+        </div>
+        <script>
+            $(function () {
+                $('#cidade').change(function(){
+                    var id = $(this).val();
+                    $.get('/clube-do-profissional/listacurso/'+id, function(data){
+                        $('#lista-cursos').html(data);
+                    });
+                });
+            });
+        </script>
+    <?php else: ?>
+        <div class="error">
+            Nenhum curso disponível no momento!
+        </div>
+    <?php endif; ?>
+</div>

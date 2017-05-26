@@ -1,0 +1,19 @@
+<div class="pagination">
+    <?php
+    $parametros = $this->parametros;
+    ?>
+    <?php $parametros['pagina'] = $this->first; ?>
+    <a class="<?php echo ($this->first == $this->current) ? 'disabled' : ''; ?> botao" title="<?php echo $this->first; ?>" href="<?php echo $this->url($parametros, $parametros['route'], FALSE); ?>">&laquo;&laquo;</a>
+    <?php $parametros['pagina'] = $this->previous; ?>
+    <a class="<?php echo ((is_null($this->previous)) || ($this->previous == $this->current)) ? 'disabled' : ''; ?> botao" title="<?php echo $this->previous; ?>" href="<?php echo $this->url($parametros, $parametros['route'], FALSE) ?>">&laquo;</a>
+
+    <?php foreach ($this->pagesInRange as $page): ?>
+        <?php $parametros['pagina'] = $page; ?>
+        <a class="<?php echo ($page == $this->current) ? 'disabled' : ''; ?> botao" title="<?php echo $page; ?>" href="<?php echo $this->url($parametros, $parametros['route'], FALSE) ?>"><?php echo $page; ?></a>
+    <?php endforeach; ?>
+
+    <?php $parametros['pagina'] = $this->next; ?>
+    <a class="<?php echo ((is_null($this->next)) || ($this->next == $this->current)) ? 'disabled' : ''; ?> botao" title="<?php echo $this->next; ?>" href="<?php echo $this->url($parametros, $parametros['route'], FALSE) ?>">&raquo;</a>
+    <?php $parametros['pagina'] = $this->last; ?>
+    <a class="<?php echo ($this->last == $this->current) ? 'disabled' : ''; ?> botao" title="<?php echo $this->last; ?>" href="<?php echo $this->url($parametros, $parametros['route'], FALSE) ?>">&raquo;&raquo;</a>
+</div>

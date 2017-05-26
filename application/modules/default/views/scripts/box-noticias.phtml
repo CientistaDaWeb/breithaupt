@@ -1,0 +1,16 @@
+<div class="sidebar" id="noticias">
+    <h2 class="margem_b">Notícias e Novidades</h2>
+    <?php if (!empty($this->destaques)): ?>
+        <ul class="margem_t">
+            <?php foreach ($this->destaques AS $noticia): ?>
+                <li>
+                    <h3><?php echo $noticia['titulo']; ?></h3>
+                    <a href="/noticia/<?php echo $noticia['slug']; ?>" title="<?php echo $noticia['titulo']; ?>">Leia mais[+]</a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else:
+        ?>
+        <div class="error margem_t">Nenhuma notícia em destaque!</div>
+    <?php endif; ?>
+</div>

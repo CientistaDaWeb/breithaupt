@@ -1,0 +1,77 @@
+<div class="grid_4">
+    <?php echo $this->partial('box-noticias.phtml', array('destaques' => $this->noticias_destaque)); ?>
+</div>
+<style>
+    .box_home .jornal_de_ofertas{
+        background: url(/storage/imagem/<?php echo $this->jornal['imagem']; ?>/jornal?w=155&h=162&c=crop) bottom left no-repeat #FFF;
+    }
+</style>
+<?php
+$texto = $this->TextosModel->getByCodigo('Home');
+echo $texto['texto'];
+?>
+<?php
+if (!empty($this->video)):
+    ?>
+    <div id="dialog-video">
+        <iframe width="560" id="video-youtube" height="315" src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <script>
+        $(function () {
+            $("#dialog-video").dialog({
+                modal: true,
+                autoOpen: false,
+                width: 600,
+                height: 380,
+                resizable: false,
+                dialogClass: "modal",
+                beforeClose: function () {
+                    $("#video-youtube").attr('src', '');
+                },
+                open: function () {
+                    $("#video-youtube").attr('src', '<?php echo $this->video['video']; ?>');
+                },
+            });
+            $('.abre-video').click(function () {
+                $("#dialog-video").dialog('open');
+            });
+        });
+    </script>
+    <?php
+else:
+    ?>
+    <script>
+        $(function () {
+            $('.abre-video').click(function () {
+                window.open('https://www.youtube.com/user/redebreithaupt');
+                return false;
+            });
+        });
+    </script>
+<?php
+endif;
+if (!empty($this->banner)):
+    if (!isset($_SESSION['banner']) || !$_SESSION['banner']):
+        ?>
+        <div id="dialog-banner">
+            <a href="<?php echo ($this->banner['link']) ? $this->banner['link'] : '#'; ?>">
+                <img src="/storage/imagem/<?php echo $this->banner['imagem']; ?>/banners_flutuantes?w=800&h=500&c=crop" />
+            </a>
+        </div>
+        <script>
+            $(function () {
+                $("#dialog-banner").dialog({
+                    modal: true,
+                    autoOpen: true,
+                    width: 840,
+                    height: 560,
+                    resizable: false,
+                    dialogClass: "modal"
+                });
+            });
+        </script>
+        <?php
+        $_SESSION['banner'] = true;
+    endif;
+endif;
+?>

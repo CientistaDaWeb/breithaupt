@@ -1,0 +1,25 @@
+<?php
+$CabecalhosModel = new Cabecalhos_Model();
+$item = $CabecalhosModel->buscaPorTexto($this->codigo);
+if(!empty($item)):
+?>
+<div class="grid_6">
+    <div class="anuncio-grande"><?php echo $item['titulo']; ?> <b><?php echo $item['subtitulo']; ?></b></div>
+    <?php
+    echo $item['texto'];
+    ?>
+</div>
+<div class="grid_6 margem-b">
+    <img src="/storage/imagem/<?php echo $item['imagem']; ?>/cabecalhos?w=460&h=220&c=crop" alt="<?php echo $item['codigo']; ?>" class="margem-b" />
+</div>
+<?php endif; ?>
+<div class="clear-fix"></div>
+<div class="grid_3">
+    <div class="sidebar">
+        <?php
+        $menu = clone($this->SiteMenu());
+        $categoria = $menu->findOneByLabel($this->menu);
+        echo $this->navigation()->menu()->renderMenu($categoria);
+        ?>
+    </div>
+</div>

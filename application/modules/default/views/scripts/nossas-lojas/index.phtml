@@ -1,0 +1,61 @@
+<?php echo $this->partial('cabecalho.phtml', array('codigo' => 'Home-Centers-Lojas', 'menu' => 'Lojas e Home Centers')); ?>
+<div class="grid_9">
+    <h1>Nossas Lojas</h1>
+    <div class="grid_2 alpha" id="lista-cidades">
+        <?php if (!empty($this->lojas)): ?>
+            <?php foreach ($this->lojas AS $cidade): ?>
+                <h2 clas="blue"><?php echo $cidade[0]['cidade']; ?></h2>
+                <ul>
+                    <?php foreach ($cidade as $loja): ?>
+                        <li><a title="<?php echo $loja['nome']; ?>" source="<?php echo $loja['id']; ?>"><?php echo $loja['nome']; ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endforeach; ?>
+        <?php else: ?>
+        <?php endif; ?>
+        <hr class="margem_b_grande margem_t_grande"/>
+        <?php if (!empty($this->administracao)): ?>
+
+            <ul>
+                <?php foreach ($this->administracao AS $item): ?>
+                    <li><a class="botao-azul" source="<?php echo $item['id']; ?>" title="<?php echo $item['nome']; ?>" class="margem-t"><?php echo $item['nome']; ?></a></li>
+                    <?php
+                endforeach;
+                ?>
+            </ul>
+            <?php
+        endif;
+        ?>
+        <a class="botao-azul" id="carregaRepresentantes" title="Representantes" class="margem-t">Representantes</a>
+    </div>
+    <div class="grid_7 omega" id="endereco">
+        <div class="warning">Selecione uma de nossas lojas ao lado</div>
+    </div>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="/js/jquery.livequery.js"></script>
+<script>
+    $(function() {
+        $('#lista-cidades li a').unbind('click').die('click').click(function() {
+            $("#endereco").html('Carregando');
+            var source = $(this).attr('source');
+            var url = '/busca-loja/' + source;
+            $.get(url, function(data) {
+                if (data != '') {
+                    $("#endereco").html(data);
+                }
+            });
+        });
+        $('#lista-cidades li a:first').click();
+        $('#carregaRepresentantes').die('click').unbind('click').click(function() {
+            $.get('/representantes/', function(data) {
+                $("#endereco").html(data);
+            });
+        });
+        $("#representantes").livequery(function() {
+            $(this).accordion({
+                header: 'h4'
+            });
+        });
+    });
+</script>

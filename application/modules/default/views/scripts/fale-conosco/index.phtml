@@ -1,0 +1,88 @@
+<div class="grid_4">
+    <div id="enderecos">
+        <p>Para atendimento via telefone, o contato poderá ser através da <b>Central de Relacionamento Breithaupt,</b> os telefones de contato e o horário de atendimento seguem abaixo:</p>
+        <h2>Televendas</h2>
+        <p>
+            Jaraguá do Sul (47) 3274-7800<br />
+            Joinville (47) 3481-9991 e 3481-9999<br />
+            São Bento do Sul (47) 3626-9999<br />
+            Brusque (47) 3255-9999
+        </p>
+        <p>Segunda a Sexta 8:00 às 12:00 e 13:00 às 17:48 hs.<br /></p>
+        <h2>SAC - 0800-475 8000</h2>
+        <p>Segunda a Sexta 8:00 às 12:00 e 13:00 às 17:48 hs, somente de telefone fixo.</p>
+        <h2>Cobrança - 3372-9889</h2>
+        <p>Segunda a Sexta 8:00 às 19:15.<br />
+            Sábados 9:00 às 14:15hs.</p>
+    </div>
+</div>
+<div class="grid_8">
+    <h1>Contato</h1>
+    <p>O atendimento Breithaupt é um serviço prestado a nossos clientes para facilitar ainda mais a consulta de produtos no site e atender as dúvidas. Basta enviar a sua solicitação que teremos satisfação de lhe atender.</p>
+    <small>Campos de preenchimento obrigatório (*)</small>
+    <hr />
+    <form method="<?php echo $this->form->getMethod() ?>" action="/<?php echo $this->form->getAction() ?>" id="Form_Fale_Conosco">
+        <table class="table-formulario">
+            <tr>
+                <td colspan="2">
+                    <?php echo $this->form->nome; ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?php echo $this->form->email; ?>
+                </td>
+                <td>
+                    <?php echo $this->form->cpf; ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?php echo $this->form->estado; ?>
+                </td>
+                <td>
+                    <?php echo $this->form->cidade; ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?php echo $this->form->telefone; ?>
+                </td>
+                <td>
+                    <?php echo $this->form->assunto; ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><?php echo $this->form->mensagem; ?></td>
+            </tr>
+            <tr>
+                <td>
+                    <?php echo $this->form->receber; ?>
+                </td>
+                <td>
+                    <?php echo $this->form->enviar; ?>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    $(function () {
+        $('#estado').die('change').unbind('change').change(function () {
+            $('#cidade').html('').append($("<option />").val('').text('Selecione o Estado'));
+            var estado = $(this).attr('value');
+            $.getJSON('/pegacidades/' + estado, function (result) {
+                if (result != '') {
+                    $('#cidade').find('option').remove().end();
+                    $.each(result, function (id, obj) {
+                        $('#cidade').append($("<option />").val(obj).text(id));
+                    });
+                }
+            });
+        });
+        $('#cidade').html('').append($("<option />").val('').text('Selecione o Estado'));
+        $('#estado').val('');
+        $('#telefone-label label').html('Telefone de Contato (*) <small>Ex: (47) 1234-1234</small>');
+        $('#cidade-label label').html('Cidade e Estado(*) <small>Ex: Jaraguá do Sul - SC</small>');
+    });
+</script>

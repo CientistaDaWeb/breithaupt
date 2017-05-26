@@ -1,0 +1,23 @@
+<div class="grid_6">
+    <div class="anuncio-grande">Sempre mais <b>INSPIRAÇÃO</b></div>
+    <?php
+    $TextosModel = new Textos_Model();
+    $texto = $TextosModel->getByCodigo('Sempre-Mais-Inspiração');
+    echo $texto['texto'];
+    ?>
+</div>
+<div class="grid_6 margem-b">
+    <img src="/storage/imagem/profissionais.jpg/empresa?w=460&h=220&c=crop" alt="Fachada - Breithaupt" class="margem-b" />
+</div>
+<div class="clear-fix"></div>
+<div class="grid_3">
+    <div class="sidebar">
+        <a class="botao" href="#" title="Entrar">Entrar</a>
+        <hr class="margem-t" />
+        <?php
+        $menu = clone($this->ClubeDoProfissionalMenu());
+        $categoria = $menu->findOneByLabel('Clube do Profissional');
+        echo $this->navigation()->menu()->renderMenu($categoria);
+        ?>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<?php
+if (!isset($this->noLayout)):
+    echo $this->partial('partials/title.phtml', array(
+        'title' => $this->model->getOption('title')
+    ));
+endif;
+?>
+<div class="topButtons">
+    <a href="/<?php echo $this->module . '/save/' . $this->controller . '/exportar'; ?>" class="botao">Exportar Contatos</a>
+</div>
+<?php if (!empty($this->model->_items)): ?>
+    <div id="searchList">
+        <table class="listagem">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Estado</th>
+                    <th>Cidade</th>
+                    <th>Telefone</th>
+                    <th>Assunto</th>
+                    <th>Criado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->model->_items AS $item): ?>
+                    <tr>
+                        <td><?php echo $item['nome']; ?></td>
+                        <td><?php echo $item['email']; ?></td>
+                        <td><?php echo $item['estado']; ?></td>
+                        <td><?php echo $item['cidade']; ?></td>
+                        <td><?php echo $item['telefone']; ?></td>
+                        <td><?php echo $item['assunto']; ?></td>
+                        <td><?php echo $item['criado']; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php endif; ?>

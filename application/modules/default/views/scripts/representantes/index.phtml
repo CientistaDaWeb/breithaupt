@@ -1,0 +1,32 @@
+<div id="representantes">
+    <?php foreach ($this->representantes AS $item): ?>
+        <h4><?php echo $item[0]['cidade']; ?></h4>
+        <div>
+            <?php foreach ($item AS $representante): ?>
+                <div class="representante">
+                    <table>
+                        <tr>
+                            <th>Telefone:</th>
+                        </tr>
+                        <tr>
+                            <td><span><?php echo $representante['fone']; ?></span></td>
+                        </tr>
+                        <tr>
+                            <th>E-mail:</th>
+                        </tr>
+                        <tr>
+                            <td><span><?php echo $representante['email']; ?></span></td>
+                        </tr>
+                        <tr>
+                            <th>Endereço:</th>
+                        </tr>
+                        <tr>
+                            <td><span><?php echo $representante['endereco']; ?></span></td>
+                        </tr>
+                    </table>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <hr />
+    <?php endforeach; ?>
+</div>

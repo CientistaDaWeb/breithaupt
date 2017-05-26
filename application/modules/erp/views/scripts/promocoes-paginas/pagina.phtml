@@ -1,0 +1,81 @@
+<div class="grid_12">
+    <?php
+    if (!isset($this->noLayout)):
+        echo $this->partial('partials/title.phtml', array(
+            'title' => $this->model->getOption('title')
+        ));
+    endif;
+    ?>
+    <script src="/js/jquery.uploadifive.js"></script>
+    <link href="/css/uploadifive.css" media="screen" rel="stylesheet" type="text/css" />
+    <script>
+        $(function() {
+            $('#uploadfive').uploadifive({
+                uploadScript: '/<?php echo $this->module; ?>/save/<?php echo $this->controller; ?>/upload/',
+                buttonText: 'Enviar Páginas',
+                fileType: 'image',
+                formData: {
+                    'promocao_id': '<?php echo $this->promocao_id; ?>',
+                },
+                width: 250,
+                height: 50,
+                removeCompleted : true,
+                onQueueComplete: function() {
+                    $('#PromocoesTabs').tabs('load', $('#PromocoesTabs').tabs('option', 'selected'));
+                }
+            });
+        });
+    </script>
+    <form>
+        <input id="uploadfive" name="files" type="file" multiple="true">
+    </form>
+    <hr />
+    <div class="modal" id="PromocoesPaginasModal" title="<?php echo $this->model->getOption('title'); ?>"></div>
+    <?php if (!empty($this->items)): ?>
+        <table class="listagem">
+            <thead>
+                <tr class="ui-widget-header">
+                    <th></th>
+                    <th></th>
+                    <th>Imagem</th>
+                    <th>Ordem</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                foreach ($this->items AS $item):
+                    $item = $this->model->adjustToView($item);
+                    ?>
+                    <tr class="<?php echo $item['class']; ?>">
+                        <td align="center"><button class="btEditar <?php echo $this->controller; ?>" source="<?php echo $item['id']; ?>"><?php echo $this->model->getOption('buttons', 'edit'); ?></button></td>
+                        <td align="center"><button class="btExcluir <?php echo $this->controller; ?>" source="<?php echo $item['id']; ?>"><?php echo $this->model->getOption('buttons', 'delete'); ?></button></td>
+                        <td align="center"><a href="/storage/file/<?php echo $item['imagem']; ?>/promocoes/view" target="_blank"><img src="/storage/imagem/<?php echo $item['imagem']; ?>/promocoes?w=100&h=100&c=crop" /></a></td>
+                        <td><?php echo $item['ordem']; ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <?php
+    else:
+        echo $this->partial('partials/empty.phtml', array(
+            'message' => $this->model->getOption('messages', 'empty')
+        ));
+    endif;
+    if ($this->noLayout):
+        ?>
+        <div id="<?php echo $this->controller; ?>Modal" class="modal" title="<?php echo $this->model->getOption('title'); ?>"></div>
+        <script src="/js/submodulo.js"></script>
+        <script>
+        $(function() {
+            $().submodulo({
+                controller: '<?php echo $this->controller; ?>',
+                module: '<?php echo $this->module; ?>',
+                tab: '#PromocoesTabs',
+                modal: '#<?php echo $this->controller; ?>Modal',
+                form: '#<?php echo $this->form->getId(); ?>',
+                parent_id: '<?php echo (!empty($this->data['parent_id'])) ? $this->data['parent_id'] : ''; ?>'
+            });
+        });
+        </script>
+    <?php endif; ?>
+</div>

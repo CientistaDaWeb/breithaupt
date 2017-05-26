@@ -1,0 +1,58 @@
+<script src="/js/jquery.elevateZoom-3.0.8.min.js"></script>
+<img src="/storage/imagem/<?php echo $this->paginas[0]['imagem']; ?>/promocoes?w=613&h=693&c=crop" data-zoom-image="/storage/imagem/<?php echo $this->paginas[0]['imagem']; ?>/promocoes?w=2048&h=2310&c=crop" id="zoom_image" />
+<div class="clear-fix"> </div>
+<script>
+    $(function () {
+        $("#zoom_image").elevateZoom({
+            zoomType: "inner",
+            gallery: 'thumbs',
+            imageCrossfade: true,
+            loadingIcon: '/images/ajax-loader.gif'
+        });
+    });
+</script>
+<div id="thumbs">
+    <?php
+    $i = 1;
+    foreach ($this->paginas AS $pagina):
+        ?>
+        <a class="link" data-image="/storage/imagem/<?php echo $pagina['imagem']; ?>/promocoes?w=613&h=693&c=crop" data-zoom-image="/storage/imagem/<?php echo $pagina['imagem']; ?>/promocoes?w=2048&h=2310&c=crop">
+            <img src="/storage/imagem/<?php echo $pagina['imagem']; ?>/promocoes?w=50&h=50&c=crop"  /><br /><?php echo $i; ?>
+        </a>
+        <?php
+        $i++;
+    endforeach;
+    ?>
+    <br />
+    <p class="small margem-t"><b>*Passe o mouse sobre a imagem ampliada para dar zoom!<br />* Clique sobre as miniaturas para ampliá-las!</b></p>
+</div>
+<style>
+    #thumbs{
+        text-align: center;
+        clear: both;
+        margin-top: 55px;
+    }
+    #thumbs a{
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+        color: #EA1C24;
+    }
+    #zoom_image{
+        left: 50%;
+        margin-left: -306px;
+        margin-top: 40px;
+    }
+</style>
+<?php if (isset($this->preview)): ?>
+    <div style="display: none;">
+        <?php
+        foreach ($this->paginas AS $pagina):
+            ?>
+            <img src="/storage/imagem/<?php echo $pagina['imagem']; ?>/promocoes?w=613&h=693&c=crop" />
+            <img src="/storage/imagem/<?php echo $pagina['imagem']; ?>/promocoes?w=2048&h=2310&c=crop" />
+            <?php
+        endforeach;
+        ?>
+    </div>
+<?php endif; ?>

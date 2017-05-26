@@ -1,0 +1,8 @@
+<?php echo $this->partial('cabecalho.phtml', array('codigo' => 'Servicos', 'menu' => 'Lojas e Home Centers')); ?>
+<div class="grid_9" id="servicos">
+    <?php
+    $texto = $this->TextosModel->getByCodigo('Servicos');
+    echo '<h1>' . $texto['titulo'] . '</h1>';
+    echo $texto['texto'];
+    ?>
+</div>

@@ -1,0 +1,18 @@
+<?php echo $this->partial('cabecalho.phtml', array('codigo' => 'Cursos', 'menu' => 'O Breithaupt')); ?>
+<div class="grid_9">
+    <?php
+    if (!empty($this->curso)):
+        $curso = Cursos_Model::adjustToView($this->curso);
+        ?>
+        <h1><?php echo $curso['nome']; ?></h1>
+        <p><b>Data:</b> <?php echo $curso['data']; ?></p>
+        <p><b>Local:</b> <?php echo $curso['local'].' - '.$curso['cidade']; ?></p>
+        <p><b>Vagas:</b> <?php echo $curso['vagas']; ?></p>
+        <?php echo $curso['descricao']; ?>
+
+    <?php else: ?>
+        <div class="error">
+            Curso não encontrado
+        </div>
+    <?php endif; ?>
+</div>

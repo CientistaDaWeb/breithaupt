@@ -1,0 +1,33 @@
+<?php echo $this->partial('cabecalho.phtml', array('codigo' => 'Historico', 'menu' => 'O Breithaupt')); ?>
+<div class="grid_9" id="historico">
+    <h1>Histórico</h1>
+    <?php
+    if (!empty($this->historicos)):
+        ?>
+        <ul id="anos">
+            <?php
+            foreach ($this->historicos AS $historico):
+                ?>
+                <li><a source="<?php echo $historico['ano']; ?>"><?php echo $historico['ano']; ?></a></li>
+                <?php
+            endforeach;
+            ?>
+        </ul>
+        <div class="clear-fix" />
+        <hr class="margem-t margem-b" />
+        <div id="descricao"></div>
+        <?php
+    endif;
+    ?>
+</div>
+<script>
+    $(function() {
+        $('#anos a').die('click').unbind('click').click(function() {
+            var id = $(this).attr('source');
+            $.get('/empresa/busca-historico/' + id, function(data) {
+                $('#descricao').html(data);
+            });
+        });
+        $('#anos li a:first').click();
+    });
+</script>

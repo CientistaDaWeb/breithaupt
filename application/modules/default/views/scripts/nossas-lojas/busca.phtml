@@ -1,0 +1,36 @@
+<div id="descricao">
+    <div class="endereco float-left margem-b" id="endereco-loja">
+        <h2 class="blue margem-b"><?php echo $this->loja['cidade']; ?> - <?php echo $this->loja['nome']; ?></h2>
+        <?php echo $this->loja['descricao']; ?>
+    </div>
+    <div class="foto float-left">
+        <img src="/storage/imagem/<?php echo $this->loja['imagem']; ?>/lojas?w=320&h=195&c=crop" alt="Fachada - Breithaupt" />
+    </div>
+</div>
+<div class="clear-fix"></div>
+<div class="mapa margem-t">
+    <h1>Mapa</h1>
+    <div id="map-canvas">
+    </div>
+</div>
+<script>
+    function initialize() {
+
+        var map;
+        var myLatlng = new google.maps.LatLng(<?php echo $this->loja['longitude']; ?>);
+
+        var mapOptions = {
+            zoom: 16,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById('map-canvas'),
+                mapOptions);
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title: '<?php echo $this->loja['cidade']; ?> - <?php echo $this->loja['nome']; ?>'
+        });
+    }
+    initialize();
+</script>

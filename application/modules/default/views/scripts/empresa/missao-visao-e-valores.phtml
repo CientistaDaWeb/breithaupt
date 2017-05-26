@@ -1,0 +1,8 @@
+<?php echo $this->partial('cabecalho.phtml', array('codigo' => 'Missao-Visao-Valores', 'menu' => 'O Breithaupt')); ?>
+<div class="grid_9">
+    <h1>Missão, Visão e Valores</h1>
+    <?php
+    $texto = $this->TextosModel->getByCodigo('Missao-Visao-Valores');
+    echo $texto['texto'];
+    ?>
+</div>

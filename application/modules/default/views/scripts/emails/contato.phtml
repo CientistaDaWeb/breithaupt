@@ -1,0 +1,11 @@
+<p><b>Nome:</b> <?php echo $this->conteudo['nome']; ?></p>
+<p><b>CPF:</b> <?php echo $this->conteudo['cpf']; ?></p>
+<p><b>E-mail:</b> <?php echo $this->conteudo['email']; ?></p>
+<p><b>Telefone:</b> <?php echo $this->conteudo['telefone']; ?></p>
+<p><b>Cidade - Estado:</b> <?php echo $this->conteudo['cidade']; ?></p>
+<!--<p><b>Loja:</b> <?php echo $this->conteudo['loja']; ?></p>-->
+<p><b>Assunto:</b> <?php echo $this->conteudo['assunto']; ?></p>
+<p><?php echo nl2br($this->conteudo['mensagem']); ?></p>
+<br />
+<p>-------------------------------------------------------------</p>
+<p>E-mail enviado em <?php echo date('d/m/Y H:i:s'); ?>!</p>

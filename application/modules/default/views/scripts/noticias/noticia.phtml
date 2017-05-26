@@ -1,0 +1,37 @@
+<div class="grid_3">
+    <?php echo $this->partial('box-noticias.phtml', array('destaques' => $this->destaques)); ?>
+</div>
+<div class="grid_9">
+    <h1>Notícias e Novidades</h1>
+    <div class="borda noticia">
+        <?php if (!empty($this->noticia)): ?>
+            <div class="imagem float-left">
+                <?php if (!empty($this->noticia['imagem'])): ?>
+                    <img src="/storage/imagem/<?php echo $this->noticia['imagem']; ?>/noticias?w=223&h=173&c=crop" />
+                <?php endif; ?>
+                <!--
+                <p class="blue"><a href="#" id="enviar-email">Enviar notícia por e-mail.</a></p>
+                -->
+                <div id="fb-root"></div>
+                <script>(function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id))
+                            return;
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));</script>
+                <div class="fb-like" data-width="225" data-layout="button_count" data-show-faces="true" data-send="true"></div>
+            </div>
+            <div class="texto float-left margem-l">
+                <h2><?php echo $this->noticia['titulo']; ?></h2>
+                <?php echo $this->noticia['texto']; ?>
+                <small>Notícia publicada em <?php echo $this->noticia['data']; ?></small>
+                <a href="/noticias" class="margem_t_grande">Voltar para a lista de notícias</a>
+            </div>
+        <?php else: ?>
+            <div class="error">Notícia não encontrada!</div>
+        <?php endif; ?>
+    </div>
+</div>

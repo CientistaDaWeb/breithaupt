@@ -1,0 +1,120 @@
+<div class="grid_3">
+    <?php if (!empty($this->vagas)): ?>
+        <div class="sidebar" id="vagas">
+            <h2 class="margem_b">Vagas</h2>
+
+            <div class="noticias">
+                <ul class="margem_t">
+                    <?php foreach ($this->vagas AS $vaga): ?>
+                        <li>
+                            <h3><?php echo $vaga['titulo']; ?></h3>
+                            <p>Cidade: <?php echo $vaga['cidade']; ?></p>
+                            <p>Vagas: <?php echo $vaga['vagas']; ?></p>
+                            <a href="/trabalhe-conosco/<?php echo $vaga['slug']; ?>" class=''>Saiba Mais[+]</a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    <?php else: ?>
+        <div class="sidebar">
+            <ul class="navigation">
+                <li>
+                    <a href="/empresa/apresentacao" title="Apresentação">Apresentação</a>
+                </li>
+                <li>
+                    <a href="/breithaupt-social" title="Breithaupt Social">Breithaupt Social</a>
+                </li>
+                <!--
+                <li>
+                    <a href="/empresa/missao-visao-e-valores" title="Missão, Visão e Valores">Missão, Visão e Valores</a>
+                </li>
+                -->
+                <li>
+                    <a href="/grupo-breithaupt" title="Grupo Breithaupt">Grupo Breithaupt</a>
+                </li>
+                <li>
+                    <a href="/noticias" title="Notícias">Notícias</a>
+                </li>
+                <!--
+                <li>
+                    <a href="/clube-do-profissional/cursos" title="Cursos">Cursos</a>
+                </li>
+                -->
+            </ul>
+        </div>
+    <?php endif; ?>
+</div>
+<div class="grid_9">
+    <?php if (!empty($this->item)): ?>
+        <h1><?php echo $this->item['titulo']; ?></h1>
+        <p>Cidade: <?php echo $this->item['cidade']; ?></p>
+        <p>Vagas: <?php echo $this->item['vagas']; ?></p>
+        <?php echo $this->item['descricao']; ?>
+        <small>Campos de preenchimento obrigatório (*)</small>
+        <hr />
+        <form method="<?php echo $this->form->getMethod() ?>" action="/<?php echo $this->form->getAction() ?>" enctype="multipart/form-data">
+            <input type="hidden" name="vaga" id="vaga" value="<?php echo $this->item['titulo']; ?>" />
+            <table class="table-formulario">
+                <tr>
+                    <td>
+                        <?php echo $this->form->nome; ?>
+                    </td>
+                    <td>
+                        <?php echo $this->form->email; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <?php echo $this->form->telefone; ?>
+                    </td>
+                    <td>
+                        <?php echo $this->form->curriculo; ?>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <?php echo $this->form->estado; ?>
+                    </td>
+                    <td>
+                        <?php echo $this->form->cidade; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><?php echo $this->form->observacao; ?></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <?php echo $this->form->enviar; ?>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    <?php else: ?>
+        <h2>Faça Parte da Nossa Equipe!</h2>
+        <p>A Rede Breithaupt destaca-se entre varejistas de Materiais de Construção do estado de SC. A Rede está intensificando os esforços no seu foco de atuação e, dentro desse contexto, planeja expansões, principalmente no que se refere às transformações das Lojas em Home Centers.</p>
+        <p>O Breithaupt tem como compromisso oferecer aos clientes um atendimento personalizado e especial, e está em constante busca de talentos que contribuam com a sua missão, que é oferecer sempre mais!</p>
+        <p>Envie seu currículo para o e-mail <a href="mailto:th.recrutamento@breithaupt.com.br">th.recrutamento@breithaupt.com.br</a> e faça parte do Banco de Talentos!</p>
+    <?php endif; ?>
+</div>
+<script>
+    $(function () {
+        $('#estado').die('change').unbind('change').change(function () {
+            $('#cidade').html('').append($("<option />").val('').text('Selecione o Estado'));
+            var estado = $(this).attr('value');
+            $.getJSON('/pegacidades/' + estado, function (result) {
+                if (result != '') {
+                    $('#cidade').find('option').remove().end();
+                    $.each(result, function (id, obj) {
+                        $('#cidade').append($("<option />").val(obj).text(id));
+                    });
+                }
+            });
+        });
+        $('#cidade').html('').append($("<option />").val('').text('Selecione o Estado'));
+        $('#estado').val('');
+        $('#telefone-label label').html('Telefone (*) <small>Ex: (47) 1234-1234</small>');
+        $('#curriculo-label label').html('Anexar Currículo (*) <small>doc, docx, pdf,txt');
+    });
+</script>

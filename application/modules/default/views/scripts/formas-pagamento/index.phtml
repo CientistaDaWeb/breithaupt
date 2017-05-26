@@ -1,0 +1,8 @@
+<?php echo $this->partial('cabecalho.phtml', array('codigo' => 'Formas-Pagamento', 'menu' => 'Lojas e Home Centers')); ?>
+<div class="grid_9">
+    <h1>Formas de Pagamento</h1>
+    <?php
+    $texto = $this->TextosModel->getByCodigo('Formas-Pagamento');
+    echo $texto['texto'];
+    ?>
+</div>
